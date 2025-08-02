@@ -1,67 +1,67 @@
 
 # ✈️ Moveo Flight API
 
-Moveo Flight API is a **Spring Boot** backend for managing private flight reservations, online payments, and notifications (Email/SMS).  
+Moveo Flight API is a **Spring Boot** backend for managing private flight reservations, online payments, and notifications (Email/SMS).
 
-It supports:  
+It supports:
 
-- **User registration with OTP (Email/SMS) verification**  
-- **Flight search & reservation system**  
-- **Payment processing via Stripe**  
-- **Notification system (scheduled Email & SMS)**  
-- **Webhook handling for payment confirmation**  
+- **User registration with OTP (Email/SMS) verification**
+- **Flight search & reservation system**
+- **Payment processing via Stripe**
+- **Notification system (scheduled Email & SMS)**
+- **Webhook handling for payment confirmation**
 
 ---
 
 ## 📌 Tech Stack
 
-- **Backend:** Spring Boot 3.x  
-- **Database:** MySQL (JPA/Hibernate)  
-- **Security:** Spring Security + JWT  
-- **Payment Gateway:** Stripe  
-- **Notifications:**  
-  - Email → Mailtrap for test  
-  - SMS → Twilio  
-- **Scheduling:** Spring Scheduler (cron job for pending notifications)  
-- **Frontend:** React + Stripe Elements  
+- **Backend:** Spring Boot 3.x
+- **Database:** MySQL (JPA/Hibernate)
+- **Security:** Spring Security + JWT
+- **Payment Gateway:** Stripe
+- **Notifications:**
+  - Email → Mailtrap for test
+  - SMS → Twilio
+- **Scheduling:** Spring Scheduler (cron job for pending notifications)
+- **Frontend:** React + Stripe Elements
 
 ---
 
 ## 📂 Project Structure
 
-    moveo-flight-api/  
-    ├── controller/        # REST API Controllers  
-    ├── model/             # Entities (User, Flight, Reservation, Payment, Notification)  
-    ├── repository/        # JPA Repositories  
-    ├── service/           # Business logic (PaymentService, NotificationService, OtpService)  
-    ├── scheduler/         # Scheduled jobs (send pending notifications)  
-    ├── config/            # Security, Stripe, Twilio config  
-    └── resources/  
-      └── application.yml  
+    moveo-flight-api/
+    ├── controller/        # REST API Controllers
+    ├── model/             # Entities (User, Flight, Reservation, Payment, Notification)
+    ├── repository/        # JPA Repositories
+    ├── service/           # Business logic (PaymentService, NotificationService, OtpService)
+    ├── scheduler/         # Scheduled jobs (send pending notifications)
+    ├── config/            # Security, Stripe, Twilio config
+    └── resources/
+      └── application.yml
 ---
 
 ## 🚀 Features
 
 - **Users & Authentication**
   - Register users with OTP verification (Email or SMS)
-  - JWT-based authentication for API access  
+  - JWT-based authentication for API access
 
 - **Flights**
-  - Create, update, list available flights  
-  - Flight statuses → `AVAILABLE`, `MAINTENANCE`, `RESERVED`  
+  - Create, update, list available flights
+  - Flight statuses → `AVAILABLE`, `MAINTENANCE`, `RESERVED`
 
 - **Reservations**
-  - Reserve a flight → status initially `PENDING`  
-  - After payment success → status becomes `CONFIRMED`  
+  - Reserve a flight → status initially `PENDING`
+  - After payment success → status becomes `CONFIRMED`
 
 - **Payments**
   - Stripe checkout with `payment_intent`
-  - Webhook to confirm `payment_intent.succeeded`  
-  - Payment status → `PENDING`, `PAID`, `FAILED`  
+  - Webhook to confirm `payment_intent.succeeded`
+  - Payment status → `PENDING`, `PAID`, `FAILED`
 
 - **Notifications**
   - Send booking confirmation (EMAIL / SMS)
-  - Scheduler retries pending notifications  
+  - Scheduler retries pending notifications
 
 ---
 
@@ -73,7 +73,7 @@ It supports:
 |--------|--------------------------|-------------|
 | POST   | `/api/users`     | Register user & send OTP |
 | POST   | `/api/users/verify-otp`   | Verify OTP |
-| POST   | `/api/users/resend-otp`   | Resend OTP |
+| GET   | `/api/users/resend-otp`   | Resend OTP |
 | POST   | `/api/auth/login`        | Authenticate & get JWT |
 
 User information (for test) :
@@ -119,10 +119,10 @@ User with admin role
 
 | Method | Endpoint                       | Description |
 |--------|-------------------------------|-------------|
-| POST   | `/api/reservations`           | Create a reservation |
+| POST   | `/api/reservations?flightId={id}&userId={id}`           | Create a reservation |
 | GET    | `/api/reservations/{id}`      | Get reservation details |
 | GET    | `/api/reservations/user/{userId}`      | Get a user reservation details |
-| PUT    | `/api/reservations/{id}/cancel`      | Camcel a reservation |
+| PUT    | `/api/reservations/{id}/cancel`      | Cancel a reservation |
 
 ---
 

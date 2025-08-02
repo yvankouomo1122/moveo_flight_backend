@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    private final EmailService emailService; 
+    private final EmailService emailService;
     private final SmsService smsService;
     protected final OtpService otpService;
 
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
     public boolean verifyOtp(String email, String otpCode) {
         User u = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
-                
+
         if (u.getOtpExpiry().isBefore(LocalDateTime.now())){
             return false; // OTP expired
         }
@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
 
         // Send new OTP via email and SMS
         String message = "Your new OTP for verification is: " + newOtp;
-        smsService.sendSms(u.getPhoneNumber(), message);
+        // smsService.sendSms(u.getPhoneNumber(), message);
         emailService.sendEmail(email, "OTP Verification", message);
     }
 

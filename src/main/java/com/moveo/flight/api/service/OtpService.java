@@ -21,7 +21,7 @@ public class OtpService {
     public boolean sendOtp(User user, String otp) {
         try{
             String message = "Your OTP for verification is: " + otp;
-            smsService.sendSms(user.getPhoneNumber(), message);
+            // smsService.sendSms(user.getPhoneNumber(), message);
             emailService.sendEmail(user.getEmail(), "OTP Verification", message);
             return true;
         } catch (Exception e) {

@@ -17,7 +17,7 @@ import org.json.JSONObject;
 public class PaymentController {
 
     private final PaymentService paymentService;
-    private static final String STRIPE_WEBHOOK_SECRET = "whsec_1ec9e3d3f6bcb2b204bcb896ab16e6b0782aba19d7d915520252a513d8f4ff98"; // Replace with your actual Stripe webhook secret
+    private static final String STRIPE_WEBHOOK_SECRET = "whsec_cb7070c8a088e5a23d5d94f14188309cdad7d11c5114069198691e78d7190fbf"; // Replace with your actual Stripe webhook secret
 
     public PaymentController(PaymentService paymentService) {
         this.paymentService = paymentService;
@@ -57,7 +57,7 @@ public class PaymentController {
                     JSONObject json = new JSONObject(rawJson);
                     if (json.has("id")) {
                         String paymentIntentId = json.getString("id");
-                        
+
                         try {
                             intent = PaymentIntent.retrieve(paymentIntentId);
                         } catch (StripeException e) {
